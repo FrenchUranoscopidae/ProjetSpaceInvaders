@@ -6,11 +6,17 @@ var timer = 0;
 var direction = 1;
 var lives = 3;
 var playerBox;
+var score;
 var gameover;
+var scoreX;
+var scoreY;
 
 function setup()
 {
   gameover = false;
+  score = 0;
+  scoreX = 0;
+  scoreY = 0;
   playerBox = new AABB(50, 50);
   var canvas = createCanvas(contentDiv.offsetWidth, contentDiv.offsetHeight); // Crée le createCanvas
   canvas.parent("screen"); // Attribut le canvas à la div.
@@ -36,6 +42,13 @@ function draw()
   playerBox.x = x;
   playerBox.y = y;
   background(10);
+  fill(225);
+  noStroke();
+  textSize(14);
+  textAlign(LEFT, TOP);
+  textFont('monospace');
+  textStyle(BOLD);
+  text("SCORE : "+score, scoreX, scoreY);
   var y = height/1.1;
 
   moveEnemies();
@@ -132,6 +145,7 @@ var Enemy = function(_pos)
     {
       var index = enemies.indexOf(this);
       enemies.splice(index, 1);
+      score += 10;
     }
   }
 
