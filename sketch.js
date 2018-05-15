@@ -6,9 +6,11 @@ var timer = 0;
 var direction = 1;
 var lives = 3;
 var playerBox;
+var gameover;
 
 function setup()
 {
+  gameover = false;
   playerBox = new AABB(50, 50);
   var canvas = createCanvas(contentDiv.offsetWidth, contentDiv.offsetHeight); // Crée le createCanvas
   canvas.parent("screen"); // Attribut le canvas à la div.
@@ -79,6 +81,16 @@ function draw()
   timer--;
   if(timer <= 0)
     timer = 0;
+
+  if(lives <= 0)
+  {
+    gameover = true;
+  }
+
+  if(gameover)
+  {
+
+  }
 }
 
 var Shot = function(_pos)
