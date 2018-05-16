@@ -10,6 +10,16 @@ var score;
 var gameover;
 var scoreX;
 var scoreY;
+var enemySprite;
+var playerSprite;
+var imgBG;
+
+function preload()
+{
+  imgBG = loadImage('img/background4.3..png');
+  playerSprite = loadImage('img/player.png');
+
+}
 
 function setup()
 {
@@ -40,7 +50,8 @@ function setup()
 
 function draw()
 {
-  background(10);
+  background(0);
+  image(imgBG, 0, 0, width, height);
   fill(225);
   noStroke();
   textSize(14);
@@ -48,7 +59,7 @@ function draw()
   textFont('monospace');
   textStyle(BOLD);
   text("SCORE : "+score, scoreX, scoreY);
-  var y = height/1.1;
+  var y = height/1.15;
   playerBox.x = x;
   playerBox.y = y;
 
@@ -76,7 +87,7 @@ function draw()
     shots.push(new Shot(createVector(x, y)));
   }
 
-  ellipse(x, y, 50, 50);
+  image(playerSprite, x, y, 50, 50);
 
   for (var i = 0; i < enemies.length; i++)
   {
@@ -103,18 +114,14 @@ function draw()
 
   if(gameover)
   {
-    console.log("ded");
-    fill(255);
-    rect(0, 0, width, height);
-
     fill(0);
     noStroke();
     textSize(50);
-    textAlign(LEFT, TOP);
+    textAlign(CENTER, CENTER);
     textFont('monospace');
     textStyle(BOLD);
     text("GAME OVER", width/2, height/2);
-    textSize(20);hj
+    textSize(20);
     text("SCORE : " + score, width/2 + 50, height/2 + 50);
   }
 }
