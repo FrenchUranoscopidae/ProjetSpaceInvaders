@@ -18,8 +18,7 @@ function preload()
 {
   imgBG = loadImage('img/background4.3..png');
   playerSprite = loadImage('img/player.png');
-  enemySprite = loadImage('img/enemy.png')
-
+  enemySprite = loadImage('img/enemy.png');
 }
 
 function setup()
@@ -124,6 +123,8 @@ function draw()
     text("GAME OVER", width/2, height/2);
     textSize(20);
     text("SCORE : " + score, width/2 + 50, height/2 + 50);
+    enemies = [];
+    y = -200;
   }
 }
 
