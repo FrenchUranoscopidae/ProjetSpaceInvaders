@@ -13,11 +13,12 @@ var scoreY;
 
 function setup()
 {
+  playerBox = new AABB(50, 50);
   gameover = false;
   score = 0;
   scoreX = 0;
   scoreY = 0;
-  playerBox = new AABB(50, 50);
+
   var canvas = createCanvas(contentDiv.offsetWidth, contentDiv.offsetHeight); // Crée le createCanvas
   canvas.parent("screen"); // Attribut le canvas à la div.
   var numberOfRows = 5;
@@ -39,8 +40,6 @@ function setup()
 
 function draw()
 {
-  playerBox.x = x;
-  playerBox.y = y;
   background(10);
   fill(225);
   noStroke();
@@ -50,6 +49,8 @@ function draw()
   textStyle(BOLD);
   text("SCORE : "+score, scoreX, scoreY);
   var y = height/1.1;
+  playerBox.x = x;
+  playerBox.y = y;
 
   moveEnemies();
 
@@ -102,7 +103,19 @@ function draw()
 
   if(gameover)
   {
+    console.log("ded");
+    fill(255);
+    rect(0, 0, width, height);
 
+    fill(0);
+    noStroke();
+    textSize(50);
+    textAlign(LEFT, TOP);
+    textFont('monospace');
+    textStyle(BOLD);
+    text("GAME OVER", width/2, height/2);
+    textSize(20);hj
+    text("SCORE : " + score, width/2 + 50, height/2 + 50);
   }
 }
 
@@ -167,11 +180,11 @@ var Enemy = function(_pos)
         var index = shots.indexOf(shot);
         shots.splice(index, 1);
       }
+    }
 
-      if(checkCollisionBox(playerBox, this.boxEnemy))
-      {
-        lives = 0;
-      }
+    if(checkCollisionBox(playerBox, this.boxEnemy))
+    {
+      lives = 0;
     }
   }
 }
@@ -224,9 +237,11 @@ var AABB = function(_width, _height)
 
 function checkCollisionBox(box1, box2)
 {
+
   if(box2.x >= box1.x + box1.width || box2.x + box2.width <= box1.x || box2.y >= box1.y + box1.height || box2.y + box2.height < box1.y)
   {
     return false;
+
   }
   else
   {
