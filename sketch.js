@@ -14,11 +14,16 @@ var enemySprite;
 var playerSprite;
 var imgBG;
 
+var playx, playy, playw, playh;
+var gameStart = false;
+var img;
+
 function preload()
 {
   imgBG = loadImage('img/background4.3..png');
   playerSprite = loadImage('img/player.png');
   enemySprite = loadImage('img/enemy.png');
+  img = loadImage('./img/fond menu.png');
 }
 
 function setup()
@@ -46,86 +51,103 @@ function setup()
       xoffset += enemyWidth + spacing;
     }
   }
+
+  playx = 20;
+  playy = 20;
+  playw = 100;
+  playh = 50;
 }
 
 function draw()
 {
-  background(0);
-  image(imgBG, 0, 0, width, height);
-  fill(0);
-  noStroke();
-  textSize(14);
-  textAlign(LEFT, TOP);
-  textFont('monospace');
-  textStyle(BOLD);
-  text("SCORE : "+score, scoreX, scoreY);
-  var y = height/1.15;
-  playerBox.x = x;
-  playerBox.y = y;
+  background(10);
+  image(img, 0, 0,width,height);
 
-  moveEnemies();
 
-  if (keyIsDown(LEFT_ARROW))
+  if(gameStart == false)
   {
-    if(x >= 10)
-    {
-      x -= 5;
-    }
+    rect(playx, playy, playw, playh);
   }
-
-  if (keyIsDown(RIGHT_ARROW))
+  else
   {
-    if(x <= width - 10)
-    {
-      x += 5;
-    }
-  }
-
-  if(timer == 0 && keyIsDown(UP_ARROW))
-  {
-    timer = 30;
-    shots.push(new Shot(createVector(x, y)));
-  }
-
-  image(playerSprite, x, y, 50, 50);
-
-  for (var i = 0; i < enemies.length; i++)
-  {
-    var enemy = enemies[i];
-    enemy.update();
-    enemy.draw();
-  }
-
-  for (var i = 0; i < shots.length; i++)
-  {
-    var shot = shots[i];
-    shot.update();
-    shot.draw();
-  }
-
-  timer--;
-  if(timer <= 0)
-    timer = 0;
-
-  if(lives <= 0)
-  {
-    gameover = true;
-  }
-
-  if(gameover)
-  {
+    var y = height/1.1;
+    background(0);
+    image(imgBG, 0, 0, width, height);
     fill(0);
     noStroke();
-    textSize(50);
-    textAlign(CENTER, CENTER);
+    textSize(14);
+    textAlign(LEFT, TOP);
     textFont('monospace');
     textStyle(BOLD);
-    text("GAME OVER", width/2, height/2);
-    textSize(20);
-    text("SCORE : " + score, width/2 + 50, height/2 + 50);
-    enemies = [];
-    y = -200;
-  }
+    text("SCORE : "+score, scoreX, scoreY);
+    var y = height/1.15;
+    playerBox.x = x;
+    playerBox.y = y;
+
+    moveEnemies();
+
+    if (keyIsDown(LEFT_ARROW))
+    {
+      if(x >= 10)
+      {
+        x -= 5;
+      }
+    }
+
+    if (keyIsDown(RIGHT_ARROW))
+    {
+      if(x <= width - 10)
+      {
+        x += 5;
+      }
+    }
+
+    if(timer == 0 && keyIsDown(UP_ARROW))
+    {
+      timer = 30;
+      shots.push(new Shot(createVector(x, y)));
+    }
+
+    image(playerSprite, x, y, 50, 50);
+
+    for (var i = 0; i < enemies.length; i++)
+    {
+      var enemy = enemies[i];
+      enemy.update();
+      enemy.draw();
+    }
+
+    for (var i = 0; i < shots.length; i++)
+    {
+      var shot = shots[i];
+      shot.update();
+      shot.draw();
+    }
+
+    timer--;
+    if(timer <= 0)
+      timer = 0;
+
+      if(lives <= 0)
+      {
+        gameover = true;
+      }
+
+      if(gameover)
+      {
+        fill(0);
+        noStroke();
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        textFont('monospace');
+        textStyle(BOLD);
+        text("GAME OVER", width/2, height/2);
+        textSize(20);
+        text("SCORE : " + score, width/2 + 50, height/2 + 50);
+        enemies = [];
+        y = -200;
+      }
+    }
 }
 
 var Shot = function(_pos)
@@ -283,6 +305,12 @@ function moveEnemies()
   for (enemy of enemies)
   {
     enemy.pos.x += direction * 1;
+  }
+}
+
+function mousePressed(){
+  if(gameStart == false && mouseX > playx && mouseX < playx + playw && mouseY > playy && mouseY < playy + playh){
+    gameStart = true;
   }
 }
 
