@@ -18,6 +18,7 @@ function preload()
 {
   imgBG = loadImage('img/background4.3..png');
   playerSprite = loadImage('img/player.png');
+  enemySprite = loadImage('img/enemy.png')
 
 }
 
@@ -52,7 +53,7 @@ function draw()
 {
   background(0);
   image(imgBG, 0, 0, width, height);
-  fill(225);
+  fill(0);
   noStroke();
   textSize(14);
   textAlign(LEFT, TOP);
@@ -171,7 +172,7 @@ var Enemy = function(_pos)
 
   this.draw = function()
   {
-    rect(this.pos.x, this.pos.y, this.boxEnemy.width, this.boxEnemy.height);
+    image(enemySprite, this.pos.x, this.pos.y, this.boxEnemy.width, this.boxEnemy.height);
   }
 
   this.checkCollision = function()
